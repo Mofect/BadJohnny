@@ -4,7 +4,7 @@ Theme URI: http://www.themevan.com/item/badjohnny
 Author: ThemeVan
 Author URI: http://www.themevan.com
 Description:  This theme is a redesigned version of Twenty Twelve theme which is created by the WordPress team.
-Version: 1.0
+Version: 1.04
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -23,7 +23,6 @@ This theme is modified from Twenty Twelve theme which is created by the WordPres
 
 /* Google Fonts */
 @import url(http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic&subset=latin,latin-ext);
-
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic&subset=latin,latin-ext);
 
 /* =Notes
@@ -790,40 +789,40 @@ article.sticky .featured-post {
 }
 .entry-content h1,
 .comment-content h1 {
-	font-size: 21px;
-	font-size: 1.5rem;
-	line-height: 1.5;
+	font-size: 36px;
+	font-size: 2.4rem;
+	line-height: 1.2;
 }
 .entry-content h2,
 .comment-content h2,
 .mu_register h2 {
-	font-size: 18px;
-	font-size: 1.285714286rem;
-	line-height: 1.6;
+	font-size: 30px;
+	font-size: 2.285714286rem;
+	line-height: 1.2;
 }
 .entry-content h3,
 .comment-content h3 {
-	font-size: 16px;
-	font-size: 1.142857143rem;
+	font-size: 26px;
+	font-size: 1.9rem;
 	line-height: 1.846153846;
 }
 .entry-content h4,
 .comment-content h4 {
-	font-size: 14px;
-	font-size: 1rem;
-	line-height: 1.846153846;
+	font-size: 22px;
+	font-size: 1.6rem;
+	line-height: 1.5;
 }
 .entry-content h5,
 .comment-content h5 {
-	font-size: 13px;
-	font-size: 0.928571429rem;
-	line-height: 1.846153846;
+	font-size: 20px;
+	font-size: 1.4rem;
+	line-height: 1.5;
 }
 .entry-content h6,
 .comment-content h6 {
-	font-size: 12px;
-	font-size: 0.857142857rem;
-	line-height: 1.846153846;
+	font-size: 18px;
+	font-size: 1.3rem;
+	line-height: 1.5;
 }
 .entry-content p,
 .entry-summary p,
@@ -1410,6 +1409,92 @@ a.comment-edit-link:hover {
 	color: red;
 }
 
+/* =About page template
+-------------------------------------------------------------- */
+.template-about-page .site-header,
+.template-about-page .main-navigation,
+.template-about-page footer[role="contentinfo"]{
+    display:none;
+}
+.template-about-page .card{
+	width:620px;
+	margin:150px auto;
+}
+
+.template-about-page .avatar{
+	width:90px;
+	height:90px;
+	overflow: hidden;
+	float:left;
+	margin-right:30px;
+}
+.template-about-page .avatar img{
+	width:90px;
+	height:auto;
+	border-radius: 200px;
+}
+.template-about-page .intro{
+	width:500px;
+	float:left;
+}
+.template-about-page .intro h1.name{
+	font-size:1.2em;
+	display: block;
+	margin-bottom:15px;
+	text-transform: capitalize;
+}
+.template-about-page .intro .bio{
+	font-size:14px;
+	opacity: .8;
+	line-height: 1.6em;
+	margin-bottom:15px;
+}
+.template-about-page .intro .social{
+	margin:30px 0;
+}
+
+h2.separate_text{
+	border-bottom:1px solid #eee;
+	height: 8px;
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+}
+h2.separate_text span{
+	font-size:14px;
+	color:#000;
+	background:#fff;
+	display: block;
+	width:100px;
+	margin-bottom:15px;
+}
+.template-about-page .intro .social a{
+	color:#000;
+	margin-right:12px;
+	border-bottom:0;
+}
+.template-about-page .intro .button{
+	display:inline-block;
+	padding:8px 20px;
+	text-align: center;
+	font-size:13px;
+	background:#000;
+	color:#fff;
+	border-radius: 20px;
+	border-bottom: 0;
+}
+.template-about-page .intro .button:hover{
+	background:#269fea;
+}
+@media screen and (max-width: 767px) {
+	.template-about-page .avatar{float:none;margin:0 auto 40px;}
+	.template-about-page .card,
+	.template-about-page .intro{width:100%}
+	.template-about-page .card{margin-top:50px;}
+	.template-about-page .intro h1.name{text-align:center;}
+	.template-about-page .intro .social a{font-size:14px;}
+	.template-about-page .intro .button{width:80px;display:block;margin:auto;}
+}
 
 /* =Front page template
 -------------------------------------------------------------- */

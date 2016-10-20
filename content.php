@@ -41,10 +41,14 @@
 		<?php else : ?>
 		<div class="entry-content">
 			<?php 
-			if($post->post_excerpt){
-			  the_excerpt();
+			if(!is_single()){
+				if($post->post_excerpt){
+				  the_excerpt();
+				}else{
+				  the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'badjohnny' ) );
+				}
 			}else{
-			  the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'badjohnny' ) );
+			  the_content();
 			}
 		    ?>
 			<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'badjohnny' ), 'after' => '</div>' ) ); ?>

@@ -59,6 +59,8 @@ function badjohnny_setup() {
 	// This theme styles the visual editor with editor-style.css to match the theme style.
 	add_editor_style();
 
+	add_theme_support( "title-tag" );
+
 	// Adds RSS feed links to <head> for posts and comments.
 	add_theme_support( 'automatic-feed-links' );
 
@@ -79,6 +81,15 @@ function badjohnny_setup() {
 	// This theme uses a custom image size for featured images, displayed on "standard" posts.
 	add_theme_support( 'post-thumbnails' );
 	set_post_thumbnail_size( 1200, 9999 ); // Unlimited height, soft crop
+
+	add_theme_support( 'custom-logo', array(
+	'height'      => 100,
+	'width'       => 400,
+	'flex-height' => true,
+	'flex-width'  => true,
+	'header-text' => array( 'site-title', 'site-description' ),
+    ) );
+
 }
 add_action( 'after_setup_theme', 'badjohnny_setup' );
 
@@ -159,6 +170,9 @@ function badjohnny_scripts_styles() {
 	// Loads the Internet Explorer specific stylesheet.
 	wp_enqueue_style( 'badjohnny-ie', get_template_directory_uri() . '/css/ie.css', array( 'badjohnny-style' ), '20121010' );
 	$wp_styles->add_data( 'badjohnny-ie', 'conditional', 'lt IE 9' );
+
+	// Loads the fontawesome stylesheet.
+	wp_enqueue_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome/css/font-awesome.min.css', array( 'badjohnny-style' ), '' );
 }
 add_action( 'wp_enqueue_scripts', 'badjohnny_scripts_styles' );
 
@@ -434,6 +448,10 @@ function badjohnny_body_class( $classes ) {
 
 	if ( ! is_active_sidebar( 'sidebar-1' ) || is_page_template( 'page-templates/full-width.php' ) )
 		$classes[] = 'full-width';
+    
+    if ( is_page_template( 'page-templates/about-page.php' ) ) {
+    	$classes[] = 'template-about-page';
+    }
 
 	if ( is_page_template( 'page-templates/front-page.php' ) ) {
 		$classes[] = 'template-front-page';
@@ -587,38 +605,41 @@ footer[role="contentinfo"] a:hover,
 } // end badjohnny_customizer_css
 add_action( 'wp_head', 'badjohnny_customizer_css');
 
-/* Required plugins reminder*/
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
-function require_plugin_notice() {
-	 global $current_user;
-	 $user_id = $current_user->ID;
-      if ( ! get_user_meta($user_id, 'ignore_plugin_notice') ) {
-        echo '<div class="updated"><p>';
-        printf(__('WP Post Template plugin required, please activate it or <a href="https://downloads.wordpress.org/plugin/wp-custom-post-template.zip">click here</a> to install it. | <a href="%1$s">Hide Notice</a>'), '?hide_license_key_notice=0');
-        echo "</p></div>";
-	    }
+
+/*Add social profile fields to user page*/
+if( !function_exists( 'badjohnny_custom_profile') ):
+function badjohnny_custom_profile( $contactmethods ) {
+    $contactmethods['facebook'] = 'Facebook';
+	$contactmethods['twitter'] = 'Twitter';
+	$contactmethods['google-plus'] = 'Google+';
+	$contactmethods['dribbble'] = 'Dribbble';
+	$contactmethods['behance'] = 'Behance';
+	$contactmethods['flickr'] = 'Flickr+';
+	$contactmethods['instagram'] = 'Instagram';
+	$contactmethods['tumblr'] = 'Tumblr';
+	$contactmethods['github'] = 'Github';
+	$contactmethods['youtube'] = 'Youtube';
+	$contactmethods['vimeo'] = 'Vimeo';
+	$contactmethods['pinterest'] = 'Pinterest';
+	$contactmethods['wordpress'] = 'WordPress';
+    return $contactmethods;
 }
-function hide_plugin_notice() {
-	global $current_user;
-        $user_id = $current_user->ID;
-        /* If user clicks to ignore the notice, add that to their user meta */
-        if ( isset($_GET['hide_plugin_notice']) && '0' == $_GET['hide_plugin_notice'] ) {
-             add_user_meta($user_id, 'hide_plugin_notice', 'true', true);
-	/* Gets where the user came from after they click Hide Notice */
-		if ( wp_get_referer() ) {
-    /* Redirects user to where they were before */
-    wp_safe_redirect( wp_get_referer() );
-		} else {
-    /* This will never happen, I can almost gurantee it, but we should still have it just in case*/
-    wp_safe_redirect( home_url() );
-		}
+endif;
+add_filter('user_contactmethods','badjohnny_custom_profile',10,1);
+
+if( !function_exists( 'badjohnny_author_socials') ):
+function badjohnny_author_socials(){
+	$social_profile='';
+	$social_array=array('facebook','twitter','google-plus','dribbble','behance','flickr','instagram','tumblr','github','youtube','vimeo','wordpress');
+	for($i=0;$i<count($social_array);$i++){
+	   if(get_the_author_meta($social_array[$i])<>''){
+	    $social_profile.='<a href="'.get_the_author_meta($social_array[$i]).'" target="_blank"><i class="fa fa-'.$social_array[$i].'"></i></a>';
+	   }
 	}
+	echo $social_profile;
 }
+endif;
 
-if( is_super_admin() && !is_plugin_active('wp-custom-post-template/wp-custom-post-template.php')){
-   add_action( 'admin_notices', 'require_plugin_notice' );
-   add_action('admin_init', 'hide_plugin_notice');
-}
-
-require_once('themevan_func.php');
+/* Required plugins reminder*/
+require_once get_template_directory() .'/plugins/plugins.php';
 
